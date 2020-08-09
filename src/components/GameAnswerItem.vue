@@ -25,6 +25,7 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import axios from 'axios';
+import config from '../config'
 
 export default {
   name: 'GameAnswerItem',
@@ -52,7 +53,7 @@ export default {
         correct: this.GAMEANSWERS[idx].correct = true
       };
       console.log(correctData);
-      axios.get(`http://localhost:3000/api/v1/special_game_answers/${idx + 1}/correct_answer.json`)
+      axios.get(`${config.API_URL_ROOT}/special_game_answers/${idx + 1}/correct_answer.json`)
       this.$emit('correctGameAnswer', this.gameAnswerData.id)
     },
     incorrectAnswer() {
@@ -61,7 +62,7 @@ export default {
         correct: this.GAMEANSWERS[idx].correct = false
       };
       console.log(incorrectData);
-      axios.get(`http://localhost:3000/api/v1/special_game_answers/${idx + 1}/incorrect_answer.json`)
+      axios.get(`${config.API_URL_ROOT}/special_game_answers/${idx + 1}/incorrect_answer.json`)
       this.$emit('incorrectGameAnswer', this.gameAnswerData.id)
     }
   }

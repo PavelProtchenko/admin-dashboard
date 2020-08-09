@@ -6,6 +6,7 @@
         <ToggleMode :mode="mode" @toggle="$emit('toggle')" />
         <router-view />
       </div>
+      <!-- <button class="sidebar-btn">Sidebar</button> -->
     </div>
   </div>
 </template>
@@ -33,6 +34,10 @@ export default {
 </script>
 
 <style lang="scss">
+  .dark body, html {
+    background-color: #192734;
+  }
+
   .dark .main-container {
     background-color: #192734;
     transition: background 0.5s ease-in-out;
@@ -45,12 +50,12 @@ export default {
   }
 
   .main-container {
-    height: 100%;
+    height: 93vh;
     margin: 0;
     top: 0;
     left: 0;
     right: 0;
-    height: 100%;
+    bottom: 0;
     background-color: #f5f5f5;
   }
 
@@ -61,5 +66,37 @@ export default {
     height: 85vh;
     padding: 0 2% 0 2%;
     overflow: auto;
+  }
+
+  // Sidebar btn
+  .sidebar-btn {
+    font-weight: bold;
+    border: 0;
+    border-radius: 50%;
+    padding: 20px 5px 20px 5px;
+    color: #fff;
+    background-color: #008000;
+    outline: 0;
+    margin: 0 auto;
+    position: sticky;
+    z-index: 10;
+  }
+
+  .sidebar-btn:hover {
+    cursor: pointer;
+  }
+
+  .sidebar-btn:active {
+    cursor: pointer;
+    background-color: #3399ff;
+    box-shadow: #008000 0 0 .5rem;
+  }
+
+  .hide-sidebar-btn {
+    visibility: hidden;
+  }
+
+  .show-sidebar-btn {
+    visibility: visible;
   }
 </style>

@@ -81,6 +81,7 @@ export default {
 
   .dark .label-mode {
     color: #f3f3f3;
+    transition: color 0.5s ease-in-out;
   }
 
   .label-mode {

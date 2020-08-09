@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
+import config from '../config'
 
 Vue.use(Vuex);
 
@@ -29,7 +30,7 @@ let store = new Vuex.Store({
   },
   actions: {
     GET_GAME_ANSWERS_FROM_API({commit}) {
-      return axios.get('http://localhost:3000/api/v1/special_game_answers.json')
+      return axios.get(`${config.API_URL_ROOT}/special_game_answers.json`)
         .then((gameAnswers) => {
           commit('SET_GAMEANSWERS_TO_STATE', gameAnswers.data);
           return gameAnswers;
@@ -40,7 +41,7 @@ let store = new Vuex.Store({
         })
     },
     GET_SPECIAL_GAMES_FROM_API({commit}) {
-      return axios.get('http://localhost:3000/api/v1/special_games.json')
+      return axios.get(`${config.API_URL_ROOT}/special_games.json`)
         .then((specialGames) => {
           commit('SET_SPECIAL_GAMES_TO_STATE', specialGames.data)
           return specialGames
@@ -51,7 +52,7 @@ let store = new Vuex.Store({
         })
     },
     CORRECT_GAME_ANSWER_API({commit}, id) {
-      return axios.get(`http://localhost:3000/api/v1/special_game_answers/${id}/correct_answer.json`)
+      return axios.get(`${config.API_URL_ROOT}/special_game_answers/${id}/correct_answer.json`)
         .then((gameAnswers) => {
           commit('SET_CORRECT_GAMEANSWER', gameAnswers.data);
           return gameAnswers;
@@ -62,7 +63,7 @@ let store = new Vuex.Store({
         })
     },
     INCORRECT_GAME_ANSWER_API({commit}, id) {
-      return axios.get(`http://localhost:3000/api/v1/special_game_answers/${id}/incorrect_answer.json`)
+      return axios.get(`${config.API_URL_ROOT}/special_game_answers/${id}/incorrect_answer.json`)
         .then((gameAnswers) => {
           commit('SET_INCORRECT_GAMEANSWER', gameAnswers.data);
           return gameAnswers;
