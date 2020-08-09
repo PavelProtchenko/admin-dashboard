@@ -1,28 +1,53 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" :class="mode">
+    <component :is="layout" @toggle="toggle">
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
+    </component>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainLayout from '@/layouts/MainLayout'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      mode: 'light'
+    }
+  },
   components: {
-    HelloWorld
+    MainLayout
+  },
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || 'main') + '-layout'
+    }
+  },
+  methods: {
+    toggle() {
+      if (this.mode === 'dark') {
+        this.mode = 'light'
+      } else {
+        this.mode = 'dark'
+      }
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import 'assets/index.scss';
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+  }
+
+  /* .dark {
+    background-color: #192734;
+  } */
 </style>
