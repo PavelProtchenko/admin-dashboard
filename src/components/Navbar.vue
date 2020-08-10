@@ -14,8 +14,6 @@
     >
     <a href="#" class="router-link">{{link.title}}</a>
     </router-link>
-    <!-- <li><router-link to="/game_questions" class="nav-link-right">Game Answers</router-link></li> -->
-    <!-- <a href="/game_questions" @click.prevent="" class="nav-link-right">Game Questions</a> -->
   </ul>
 </template>
 
@@ -38,16 +36,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-  // .navbar {
-  //   display: flex;
-  //   margin: 0 auto;
-  //   background-color: #3399ff;
-  //   position: sticky;
-  //   top: 0;
-  //   z-index: 10;
-  // }
-
   .dark .toolbar {
     background-color: #15202b;
     transition: background 0.5s ease-in-out;
@@ -55,10 +43,6 @@ export default {
 
   .router-link-exact-active a {
     display: flex;
-    // padding: .8rem 0 .8rem 0;
-    // margin: .5%;
-    // text-decoration: none;
-    // list-style: none;
     color: #ff0000;
   }
 

@@ -46,7 +46,6 @@ export default {
   .dark .container {
     background-color: #2c3d63;
     transition: background 0.5s ease-in-out;
-    // color: #f3f3f3;
   }
 
   .main-container {

@@ -169,6 +169,10 @@ export default {
     box-shadow: none;
   }
 
+  .dark .game-answer-ul .game-answer-li {
+    border: none;
+  }
+
   .game-answers {
     flex-basis: 25%;
     box-shadow: 0 0 8px 0 #e0e0e0;
