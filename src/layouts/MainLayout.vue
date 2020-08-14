@@ -15,7 +15,6 @@
 import Navbar from '@/components/Navbar'
 import ToggleMode from '@/components/shared/ToggleMode'
 
-
 export default {
   name: 'MainLayout',
   components: {

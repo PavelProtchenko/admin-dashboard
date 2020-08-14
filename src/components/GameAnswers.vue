@@ -1,7 +1,7 @@
 <template>
   <div class="game-answers">
     <h1>Game Answers</h1>
-    <input type="checkbox" id="checkbox" v-model="fetched" @change="fetchGameAnswers" />
+    <input type="checkbox" id="checkbox" v-model="fetched" @change="fetchGameAnswers" class="check-fetch-data" />
     <label class="toggle-switch" for="checkbox">Получать новые ответы каждые 10 сек. <span :class="fetched ? 'changed-on' : 'changed-off'">{{ changedValue }}</span></label>
     <div class="game-answer-filters">
       <Select
@@ -18,6 +18,15 @@
       </div>
     </div>
     <span class="game-answers-counter">Общее число ответов: {{ filteredGameAnswers.length }}</span>
+    <ul :class="toursOff ? 'nogame-tours' : 'game-tours'">
+      <li v-for="(tour) in sortedGameAnswers.flatMap((gameAnswer) => {return gameAnswer.tour_number}).filter((v, i, a) => a.indexOf(v) === i)"
+        :key="tour.id"
+        class="game-tour"
+        @click="filterAnswerByTour(tour)"
+      >
+      {{tour}}
+      </li>
+    </ul>
     <div class="game-space">
       <div class="main-game-answer-field">
         <ul class="game-answer-ul">
@@ -56,7 +65,12 @@ export default {
       sortedGameAnswers: [],
       fetched: false,
       timer: null,
-      changedValue: 'Off'
+      changedValue: 'Off',
+      filteredTours: [],
+      selectedTour: 0,
+      tourItem: 0,
+      toursOff: false,
+      tourNumber: null
     }
   },
   computed: {
@@ -67,7 +81,15 @@ export default {
     filteredGameAnswers() {
       if (this.sortedGameAnswers.length) {
         return this.sortedGameAnswers.filter((gameAnswer) => {
-          return gameAnswer.answer.toLowerCase().match(this.search.toLowerCase());
+
+
+
+          let number = this.selectedTour;
+          if (number) {
+            return gameAnswer.tour_number === number && gameAnswer.answer.toLowerCase().match(this.search.toLowerCase());            
+          } else {
+            return gameAnswer.answer.toLowerCase().match(this.search.toLowerCase());
+          }
         })
       } else {
         return this.GAMEANSWERS.filter((gameAnswer) => {
@@ -130,6 +152,14 @@ export default {
         this.changedValue = 'Off'
         clearInterval(this.timer)
       }
+    },
+    filterAnswerByTour(number) {
+      return this.selectedTour = number;
+    },
+    selectTour(arr, n) {
+      return arr.filter((el) => {
+        el === n
+      })
     }
   },
   mounted() {
@@ -150,127 +180,10 @@ export default {
     if(this.timer)
         clearInterval(this.timer);
     next();
-}
+  }
 }
 </script>
 
 <style lang="scss">
-  .main-game-answer-field {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 0 0 0;
-  }
-
-  .dark h1 {
-    color: #f3f3f3;
-  }
-
-  .dark .game-answers {
-    box-shadow: none;
-  }
-
-  .dark .game-answer-ul .game-answer-li {
-    border: none;
-  }
-
-  .game-answers {
-    flex-basis: 25%;
-    box-shadow: 0 0 8px 0 #e0e0e0;
-    padding: $padding*2;
-    margin-bottom: $margin*2;
-  }
-
-  .game-answer-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 1rem;
-
-  .game-answer-li {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: .5rem 1rem;
-    margin-bottom: .5rem;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-      input {
-        margin-right: 1rem;
-      }
-
-      small {
-        position: absolute;
-        right: 40px;
-        bottom: 5px;
-        font-size: .8rem;
-      }
-    }
-  }
-
-  .game-space {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  // Game Answers counter
-  .dark .game-answers-counter {
-    color: #f3f3f3;
-  }
-
-  .game-answers-counter {
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    margin: 2em 0 0 0;
-    color: #000;
-  }
-
-  // Search filter styles & dropdown filter
-  .game-answer-filters {
-    display: flex;
-    align-items: baseline;
-  }
-
-  .search-filter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 1rem;
-    height: 30px;
-
-    input {
-      width: 50%;
-      height: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      outline: none;
-      padding: 0 .5rem;
-      font-size: 1rem;
-      margin: 5% 10% 0 -25%;
-    }
-  }
-
-  // Fetch game answers automatically
-  .dark .toggle-switch {
-    color: #f3f3f3;
-  }
-
-  .toggle-switch {
-    font-size: 1.2rem;
-  }
-
-  .toggle-switch:hover {
-    cursor: pointer;
-  }
-
-  .changed-off {
-    color: #ff0000;
-  }
-
-  .changed-on {
-    color: #008000;
-  }
+  @import '../assets/styles/game_answers.scss';
 </style>

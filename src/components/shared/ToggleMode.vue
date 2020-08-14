@@ -24,7 +24,6 @@ export default {
     display: inline-block;
     width: 45px;
     height: 24px;
-    // background-color: #ff0000;
   }
 
   .toggle input {
